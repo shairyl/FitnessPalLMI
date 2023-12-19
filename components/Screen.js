@@ -29,7 +29,7 @@ function Screen({ children, style }) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.black,
   },
   view: {
     flex: 1,

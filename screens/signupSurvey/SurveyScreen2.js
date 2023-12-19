@@ -1,24 +1,38 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
-import Screen from "../../components/Screen";
 import AppButton from "../../components/AppButton";
 
 function SurveyScreen2({ navigation }) {
   return (
-    <Screen style={styles.container}>
+    <View>
+      <Image
+        source={require("../../assets/screen2.png")}
+        style={styles.backgroundImage}
+      />
       <AppButton
         title="NEXT"
         color="grey"
         textColor="dark"
-        onPress={() => navigation.navigate("SurveyScreen1")}
+        onPress={() => navigation.navigate("SurveyScreen3")}
+        style={styles.button}
       />
-    </Screen>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: { justifyContent: "flex-end", padding: 20 },
-  });
-
+  backgroundImage: {
+    width: "100%",
+    height: 850,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    bottom: 40,
+    position: "absolute",
+    left: 23,
+    width: "88%",
+  },
+});
 export default SurveyScreen2;

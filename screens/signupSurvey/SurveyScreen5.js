@@ -1,22 +1,24 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 
 import AppButton from "../../components/AppButton";
 
 function SurveyScreen5({ navigation }) {
   return (
     <View>
-      <Image
-        source={require("../../assets/screen4.png")}
-        style={styles.backgroundImage}
-      />
-      <AppButton
-        title="NEXT"
-        color="grey"
-        textColor="dark"
-        onPress={() => navigation.navigate("SurveyScreen5")}
-        style={styles.button}
-      />
+      <ScrollView>
+        <Image
+          source={require("../../assets/screen5.png")}
+          style={styles.backgroundImage}
+        />
+        <AppButton
+          title="NEXT"
+          color="grey"
+          textColor="dark"
+          onPress={() => navigation.navigate("AppNavigator")}
+          style={styles.button}
+        />
+      </ScrollView>
     </View>
   );
 }

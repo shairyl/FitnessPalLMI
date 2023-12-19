@@ -10,6 +10,7 @@ import {
   SurveyScreen4,
   SurveyScreen5,
 } from "../screens/signupSurvey";
+import AppNavigator from "./AppNavigator";
 
 const Stack = createStackNavigator();
 
@@ -49,6 +50,11 @@ const SignUpSurveyNavigator = () => {
       <Stack.Screen
         name="SurveyScreen5"
         component={SurveyScreen5}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AppNavigator"
+        component={AppNavigator}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

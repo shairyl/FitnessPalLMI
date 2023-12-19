@@ -1,17 +1,23 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-
+import { View, StyleSheet, Text } from "react-native";
 import Screen from "../../components/Screen";
+import AppButton from "../../components/AppButton";
 
-function SurveyStartScreen(props) {
+function SurveyStartScreen({ navigation }) {
   return (
     <Screen style={styles.container}>
-      <Text>fdsfdfsfdsa</Text>
+      <AppButton
+        title="NEXT"
+        color="grey"
+        textColor="dark"
+        onPress={() => navigation.navigate("SurveyScreen1")}
+      />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
+  container: { justifyContent: "flex-end", padding: 20 },
 });
+
 export default SurveyStartScreen;

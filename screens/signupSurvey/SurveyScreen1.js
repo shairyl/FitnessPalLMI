@@ -2,16 +2,22 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 
 import Screen from "../../components/Screen";
+import AppButton from "../../components/AppButton";
 
-function SurveyScreen1(props) {
+function SurveyScreen1({ navigation }) {
   return (
     <Screen style={styles.container}>
-      <Text>fdsfdfsfdsa</Text>
+      <AppButton
+        title="NEXT"
+        color="grey"
+        textColor="dark"
+        onPress={() => navigation.navigate("SurveyScreen1")}
+      />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
+  container: { justifyContent: "flex-end", padding: 20 },
 });
 export default SurveyScreen1;

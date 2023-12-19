@@ -1,16 +1,22 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Platform,
+  View,
+} from "react-native";
 
 import colors from "../config/colors";
 
 function AppButton({ title, onPress, color = "black", style, textColor }) {
   return (
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: colors[color] }, style]}
-      onPress={onPress}
-    >
-      <Text style={[styles.text, { color: colors[textColor] }]}>{title}</Text>
-    </TouchableOpacity>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[styles.button, { backgroundColor: colors[color] }, style]}>
+        <Text style={[styles.text, { color: colors[textColor] }]}>{title}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

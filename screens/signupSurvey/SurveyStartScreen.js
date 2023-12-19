@@ -12,7 +12,7 @@ function SurveyStartScreen({ navigation }) {
       />
       <AppButton
         title="NEXT"
-        color="white"
+        color="black"
         textColor="dark"
         onPress={() => navigation.navigate("SurveyScreen1")}
         style={styles.button}
@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    bottom: 170,
+    bottom: 150,
     position: "absolute",
-    left: 38,
-    width: "81%",
+    height: 200,
+    opacity: 0,
   },
 });
 

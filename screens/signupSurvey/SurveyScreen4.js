@@ -2,10 +2,11 @@ import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 import AppButton from "../../components/AppButton";
+import colors from "../../config/colors";
 
 function SurveyScreen4({ navigation }) {
   return (
-    <View>
+    <View style={{ backgroundColor: colors.dark }}>
       <Image
         source={require("../../assets/screen4.png")}
         style={styles.backgroundImage}
@@ -24,15 +25,16 @@ function SurveyScreen4({ navigation }) {
 const styles = StyleSheet.create({
   backgroundImage: {
     width: "100%",
-    height: 850,
+    marginTop: 30,
+    height: 870,
     justifyContent: "center",
     alignItems: "center",
   },
   button: {
     bottom: 40,
     position: "absolute",
-    left: 23,
-    width: "88%",
+    height: 200,
+    opacity: 0,
   },
 });
 

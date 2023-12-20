@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import ViewShot from "react-native-view-shot";
 import {
   View,
   StyleSheet,
@@ -7,14 +8,27 @@ import {
   Image,
   ScrollView,
   Animated,
+  Share,
   Dimensions,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-
+import ShareGrid from "../components/ShareGrid";
 const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 const totalSections = 6; // Added sections for the starting section, stats, and instructor section
 
 function TikTokStyleScreen() {
+  const viewShotRef = useRef();
+
+  const handleShare = () => {
+    viewShotRef.current.capture().then((uri) => {
+      Share.share({
+        message: "Check out my fitness stats!",
+        url: uri,
+      });
+    });
+  };
+
   const scrollViewRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -40,8 +54,11 @@ function TikTokStyleScreen() {
     "https://images.prismic.io/lmplus/4b1e9388-fbf6-43c8-b126-db4cd6f40862_BB100-recommended.jpg?auto=compress,format",
     "https://images.prismic.io/lmplus/3980577a-73c6-4d2b-aff9-216b6726f770_OptimalMix-recommended.jpg?auto=compress,format",
   ];
+
+  const sectionBackgroundUrl =
+    "https://images.prismic.io/lmplus/f598c8f8-97c0-4750-9cdc-27583e26816b_BODYATTACK121-recommended.jpg?auto=compress,format";
   const characterImageUrl =
-    "https://images.prismic.io/lmplus/c1e4a498-a174-48e1-b2af-448de8ad9fab_HybridEnduro-recommended.jpg?auto=compress,format"; // Replace with your character image URL
+    "https://assets.dev.lesmills.com/lmod-support/images/luffy-icon.png"; // Replace with your character image URL
   // Subheadings for each section
   const stats = [
     {
@@ -83,7 +100,14 @@ function TikTokStyleScreen() {
       >
         {/* Starting section */}
         <View style={styles.imageContainer}>
-          <Text style={styles.yearText}>2023</Text>
+          <Image
+            source={{ uri: sectionBackgroundUrl }}
+            style={styles.backgroundImage}
+            resizeMode="cover"
+          />
+
+          <View style={styles.darkener}></View>
+          <Text style={styles.yearText}>🎉2023🎉</Text>
           <Text style={styles.subHeading}>
             Look back at 2023 and discover some interesting facts with Luffy!
           </Text>
@@ -98,20 +122,25 @@ function TikTokStyleScreen() {
               resizeMode="cover"
             />
             <View style={styles.darkener}></View>
-            <View style={styles.overlay}>
-              {stats[index] && (
-                <>
-                  <Image
-                    source={{ uri: characterImageUrl }}
-                    style={styles.characterImage}
-                  />
-                  <View style={styles.speechBubble}>
-                    <Text style={styles.speechText}>{stats[index].luffy}</Text>
-                  </View>
-                  <Text style={styles.overlayText}>{stats[index].heading}</Text>
-                </>
-              )}
-            </View>
+
+            {stats[index] && (
+              <View style={styles.overlay}>
+                <Image
+                  source={{ uri: characterImageUrl }}
+                  style={styles.avatar}
+                />
+                <Text style={styles.heading}>{stats[index].heading}</Text>
+                <View style={styles.underline}></View>
+                <Text style={styles.paragraph}>{stats[index].luffy}</Text>
+                <TouchableOpacity
+                  onPress={handleShare}
+                  style={styles.shareButton}
+                >
+                  <AntDesign name="sharealt" size={24} color="black" />
+                  <Text style={styles.shareButtonText}>Share Stats</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         ))}
       </ScrollView>
@@ -131,6 +160,13 @@ function TikTokStyleScreen() {
           >
             <AntDesign name="down" size={30} color="white" />
           </TouchableOpacity>
+          <ViewShot
+            ref={viewShotRef}
+            style={styles.viewShot}
+            options={{ format: "jpg", quality: 0.9 }}
+          >
+            <ShareGrid />
+          </ViewShot>
 
           <Text style={styles.sectionTracker}>
             {currentIndex === 0
@@ -144,27 +180,75 @@ function TikTokStyleScreen() {
 }
 
 const styles = StyleSheet.create({
-  characterImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50, // Half of width and height to make it circular
-    borderColor: "white",
-    borderWidth: 2,
-    alignSelf: "center",
-    marginTop: 20,
+  shareButton: {
+    flexDirection: "row", // To align icon and text
+    alignItems: "center", // To vertically center
+    backgroundColor: "#00ff63", // A blue color for the button background
+    paddingHorizontal: 20, // Horizontal padding
+    paddingVertical: 10, // Vertical padding
+    borderRadius: 25, // Rounded corners
+    marginTop: 10, // Margin from the top or other elements
+    alignSelf: "center", // To center the button in the container
   },
-  speechBubble: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 10,
-    maxWidth: "80%",
-    alignSelf: "center",
-    marginTop: 10,
-  },
-  speechText: {
+  shareButtonText: {
     color: "black",
+    marginLeft: 8, // Space between icon and text
+    fontSize: 16, // Text size
+  },
+  imageContainer: {
+    // If you have other styles for imageContainer, keep them as well.
+    height: screenHeight,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backgroundImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  darkener: {
+    // If you want a dark overlay on the image for better text readability
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  viewShot: {
+    position: "absolute",
+    top: -300 * 2, // Off-screen
+    left: -300 * 2, // Off-screen
+  },
+
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 5,
     textAlign: "center",
   },
+  underline: {
+    borderBottomColor: "white",
+    borderBottomWidth: 2,
+    alignSelf: "center",
+    width: "60%",
+    marginBottom: 10,
+  },
+  paragraph: {
+    // Set the background color to white
+    color: "white", // Set text color to black for contrast
+    padding: 10, // Add padding inside the white background
+    borderRadius: 30,
+    width: "90%",
+    textAlign: "center",
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    top: 210,
+    borderRadius: 80,
+    position: "absolute",
+  },
+
   container: {
     flex: 1,
   },
@@ -181,7 +265,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 50,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -241,7 +325,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   yearText: {
-    fontSize: 96,
+    fontSize: 70,
     fontWeight: "bold",
     color: "white",
     textAlign: "center",
